@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:util="http://www.springframework.org/schema/util"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <http auto-config="true">
+        <form-login login-page="/"
+                    default-target-url="/app"
+                    authentication-failure-url="/?error"
+                    username-parameter="login"
+                    password-parameter="password"
+                    authentication-success-handler-ref="authenticationSuccessHandler"/>
+        <logout logout-success-url="/?logout" />
+        <csrf disabled="true" />
+
+        <cors configuration-source-ref="corsSource"/>
+    </http>
+
+    <beans:bean id="userDetailsServiceImpl" class="com.wms.api.service.UserDetailsServiceImpl"/>
+    <beans:bean id="authenticationSuccessHandler" class="com.wms.api.service.AuthenticationSuccessHandlerImpl"/>
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider user-service-ref="userDetailsServiceImpl">
+            <password-encoder ref="encoder"></password-encoder>
+        </authentication-provider>
+    </authentication-manager>
+
+
+    <beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></beans:bean>
+
+    <beans:bean id="corsSource" class="org.springframework.web.cors.UrlBasedCorsConfigurationSource">
+        <beans:property name="corsConfigurations">
+            <util:map>
+                <beans:entry key="/api/**">
+                    <beans:bean class="org.springframework.web.cors.CorsConfiguration">
+                        <beans:property name="allowedHeaders">
+                            <beans:list>
+                                <beans:value>Authorization</beans:value>
+                                <beans:value>Content-Type</beans:value>
+                                <beans:value>Access-Control-Allow-Origin</beans:value>
+                            </beans:list>
+                        </beans:property>
+                        <beans:property name="exposedHeaders">
+                            <beans:list>
+                                <beans:value>Account-Locked</beans:value>
+                                <beans:value>Account-Disabled</beans:value>
+                                <beans:value>Bad-Credentials</beans:value>
+                            </beans:list>
+                        </beans:property>
+                        <beans:property name="allowedMethods">
+                            <beans:list>
+                                <beans:value>POST</beans:value>
+                                <beans:value>GET</beans:value>
+                                <beans:value>OPTIONS</beans:value>
+                                <beans:value>PUT</beans:value>
+                                <beans:value>DELETE</beans:value>
+                            </beans:list>
+                        </beans:property>
+                        <beans:property name="allowedOrigins" value="http://localhost:3000"/>
+                    </beans:bean>
+                </beans:entry>
+            </util:map>
+        </beans:property>
+    </beans:bean>
+</beans:beans>
