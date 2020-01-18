@@ -1,7 +1,9 @@
 # WMS
 Warehaouse Mangment System
 
-Application for manage products, clients and deliveres in warehouse. Used technologies:
+This repostitory is copy of group project for Programming in JAVA.
+
+Web application for manage products, clients and deliveres in warehouse. Used technologies:
 -Spring framework,
 -Mysql Database,
 -Java.
