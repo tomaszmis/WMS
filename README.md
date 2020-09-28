@@ -1,20 +1,32 @@
-# WMS
-Warehaouse Mangment System
+
+# Warehaouse Mangment System
+
+## General info
 
 This repostitory is copy of group project for Programming in JAVA.
 
-Web application for manage products, clients and deliveres in warehouse. Used technologies:
--Spring framework,
--Mysql Database,
--Java.
+
+Web application enabling:
+* employee management,
+* inventory control,
+* creating orders and checking their status,
+* creating deliveries and controlling their status,
 
 
-How to run:
+## Technologies:
+* Spring Security,
+* Spring MVC,
+* Mysql Database,
+* Java 8,
+* Maven
 
-    sync maven repositories
 
-    import db with /import.sql (it contains sample data, db.sql is reserved for JPA)
+## Setup
+To run this project 
 
-    run "mvn jetty:run"
+    * sync maven repositories
+    * create db in MySQL, defult name "wms", defult password "wms"
+    * import db with /import.sql (it contains sample data, db.sql is reserved for JPA)
+    * run "mvn jetty:run"
 
 
